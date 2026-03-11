@@ -8,10 +8,10 @@ export const NavigationItem = ({ name, icon, href, isActive }) => {
         <Link
             to={href}
             className={cn(
-                'flex items-center gap-x-2 rounded-lg px-3 py-1.5 w-full',
+                'flex items-center gap-x-2 rounded-lg px-3 py-1.5 w-full border',
                 isActive
-                    ? 'border border-zinc-50/10 bg-white/5 text-white'
-                    : 'border-0 text-zinc-400 hover:text-white transition-colors duration-200',
+                    ? 'border-zinc-50/10 bg-white/5 text-white'
+                    : 'border-transparent text-zinc-400 hover:text-white transition-colors duration-200',
             )}
         >
             <Icon className="size-4" />
