@@ -12,7 +12,7 @@ const navigationItems = [
     {
         name: 'Release Opening',
         icon: BriefcaseBusiness,
-        href: '/release-opening',
+        href: '/release-openings',
     },
 ];
 

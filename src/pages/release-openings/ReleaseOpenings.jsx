@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { mockOpenings } from '../lib/data';
 import { LoaderCircle } from 'lucide-react';
+import { mockOpenings } from '../../lib/data';
 import { useNavigate } from 'react-router-dom';
-import EmptyState from '../components/release-opening/EmptyState';
-import ErrorState from '../components/release-opening/ErrorState';
-import OpeningList from '../components/release-opening/OpeningList';
-import CreateOpeningCard from '../components/release-opening/CreateOpeningCard';
+import EmptyState from '../../components/release-opening/EmptyState';
+import ErrorState from '../../components/release-opening/ErrorState';
+import OpeningList from '../../components/release-opening/OpeningList';
+import CreateOpeningCard from '../../components/release-opening/CreateOpeningCard';
 
-const ReleaseOpeningPage = () => {
+const ReleaseOpeningsPage = () => {
     const navigate = useNavigate();
 
     const openings = mockOpenings;
@@ -16,7 +16,7 @@ const ReleaseOpeningPage = () => {
     const error = false;
 
     const viewRole = () => navigate('/role_analytics');
-    const createNewOpening = () => navigate('/new_opening_form');
+    const createNewOpening = () => navigate('/release-opening-form');
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full px-8">
@@ -61,4 +61,4 @@ const ReleaseOpeningPage = () => {
     );
 };
 
-export default ReleaseOpeningPage;
+export default ReleaseOpeningsPage;

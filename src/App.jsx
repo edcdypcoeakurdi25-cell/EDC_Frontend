@@ -1,8 +1,8 @@
-import React from 'react';
 import HomePage from './pages/Home';
 import MainLayout from './components/Layout';
-import ReleaseOpeningPage from './pages/ReleaseOpening';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import NewOpeningForm from './pages/release-openings/NewOpeningForm';
+import ReleaseOpeningsPage from './pages/release-openings/ReleaseOpenings';
 
 const App = () => {
     return (
@@ -10,7 +10,9 @@ const App = () => {
             <Routes>
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/release-opening" element={<ReleaseOpeningPage />} />
+                    <Route path="/release-openings" element={<ReleaseOpeningsPage />} />
+                    <Route path="/release-opening-form" element={<NewOpeningForm />} />
+                    <Route path="/opening-form-details" element={<>Opening form details</>} />
                 </Route>
             </Routes>
         </BrowserRouter>

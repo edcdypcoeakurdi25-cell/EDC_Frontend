@@ -11,7 +11,7 @@ const HomePage = () => {
                 <p className="leading-16">plate today...</p>
             </div>
             <Link
-                to={'/release-opening'}
+                to={'/release-openings'}
                 className='mt-16 border border-gray-50/10 rounded-lg px-4 py-2 flex items-center gap-x-2 cursor-pointer hover:bg-white/5 transition-colors duration-200'
             >
                 <CirclePlusIcon className='size-4' />
