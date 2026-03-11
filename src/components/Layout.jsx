@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 
 const MainLayout = () => {
     return (
-        <div className='flex items-start'>
+        <div className="flex h-screen overflow-hidden">
             <Sidebar />
-            <main className='flex flex-1 items-center justify-center h-full min-h-screen px-4 py-2 bg-zinc-900 text-white'>
+            <main className="flex-1 overflow-y-auto p-5 bg-zinc-900 text-white">
                 <Outlet />
             </main>
         </div>
