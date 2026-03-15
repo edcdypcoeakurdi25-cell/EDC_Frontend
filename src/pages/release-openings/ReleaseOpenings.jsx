@@ -16,7 +16,7 @@ const ReleaseOpeningsPage = () => {
     const error = false;
 
     const viewRole = () => navigate('/role-analytics');
-    const createNewOpening = () => navigate('/release-opening-form');
+    const createNewOpening = () => navigate('/create-opening');
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full px-8">

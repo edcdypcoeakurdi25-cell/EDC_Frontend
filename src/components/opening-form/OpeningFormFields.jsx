@@ -1,7 +1,7 @@
-import { LayoutTemplate, Eye, Target, ChevronDown } from 'lucide-react';
 import OpeningFormRow from './OpeningFormRow';
+import { LayoutTemplate, Eye, Target, ChevronDown } from 'lucide-react';
 
-export default function OpeningFormFields({ formData, handleChange }) {
+export default function OpeningFormFields({ formData, handleChange, errors }) {
     return (
         <div className="mb-14">
             <OpeningFormRow icon={LayoutTemplate} label="Domain of the Opening">
@@ -10,7 +10,7 @@ export default function OpeningFormFields({ formData, handleChange }) {
                     name="domain"
                     value={formData.domain}
                     onChange={handleChange}
-                    className="w-full bg-zinc-800 border border-white/5 rounded-lg px-4 py-2.5 text-sm text-zinc-200"
+                    className={`w-full bg-zinc-800 border border-white/5 rounded-lg px-4 py-2.5 text-sm text-zinc-200, ${errors.domain ? 'border-red-500' : ''}`}
                 />
             </OpeningFormRow>
 
@@ -20,7 +20,7 @@ export default function OpeningFormFields({ formData, handleChange }) {
                         name="workType"
                         value={formData.workType}
                         onChange={handleChange}
-                        className="w-full bg-zinc-800 border border-white/5 rounded-lg px-4 py-2.5 text-sm text-zinc-300 appearance-none"
+                        className={`w-full bg-zinc-800 border border-white/5 rounded-lg px-4 py-2.5 text-sm text-zinc-300 appearance-none, ${errors.workType ? 'border-red-500' : ''}`}
                     >
                         <option value="">Choose One</option>
                         <option value="Full-time">Full-time</option>
@@ -39,7 +39,7 @@ export default function OpeningFormFields({ formData, handleChange }) {
                     name="openings"
                     value={formData.openings}
                     onChange={handleChange}
-                    className="w-full bg-zinc-800 border border-white/5 rounded-lg px-4 py-2.5 text-sm text-zinc-200"
+                    className={`w-full bg-zinc-800 border border-white/5 rounded-lg px-4 py-2.5 text-sm text-zinc-200 ${errors.openings ? 'border-red-500' : ''}`}
                 />
             </OpeningFormRow>
         </div>
