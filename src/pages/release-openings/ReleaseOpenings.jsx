@@ -11,11 +11,32 @@ import CreateOpeningCard from '../../components/release-opening/CreateOpeningCar
 const ReleaseOpeningsPage = () => {
     const navigate = useNavigate();
 
-    const openings = mockOpenings;
-    const loading = false;
-    const error = false;
+    const [openings, setOpenings] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState(false);
 
-    const viewRole = () => navigate('/role-analytics');
+    React.useEffect(() => {
+        const fetchOpenings = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/openings`);
+                const data = await response.json();
+                if (data.success) {
+                    setOpenings(data.data?.openings || []);
+                } else {
+                    setError(true);
+                }
+            } catch (err) {
+                console.error(err);
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOpenings();
+    }, []);
+
+    const viewRole = (id) => navigate(`/role-analytics/${id}`);
     const createNewOpening = () => navigate('/create-opening');
 
     return (

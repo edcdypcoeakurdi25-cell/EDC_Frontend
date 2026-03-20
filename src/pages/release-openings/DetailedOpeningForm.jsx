@@ -36,21 +36,37 @@ export default function OpeningDetailsForm() {
             }
         }
 
+        let mappedWorkType = 'ONSITE'; // Default fallback
+        if (openingData.workType) {
+            const wt = openingData.workType.toUpperCase();
+            if (wt.includes('HYBRID') || wt.includes('PART')) mappedWorkType = 'HYBRID';
+            else if (wt.includes('REMOTE')) mappedWorkType = 'REMOTE';
+            else mappedWorkType = 'ONSITE';
+        }
+
         const payload = {
-            ...openingData,
-            questions,
+            title: openingData.title || '',
+            domain: openingData.domain || '',
+            workType: mappedWorkType,
+            numberOfSlots: parseInt(openingData.openings) || 1,
+            preText: openingData.preText || '',
+            aboutRole: openingData.about || '',
+            skillsRequired: openingData.skills || '',
+            extraInfo: openingData.extra || '',
+            questions, // Custom questions, may be handled by another route
         };
 
         try {
             setSaving(true);
 
-            // await fetch('/api/openings', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(payload),
-            // });
+            await fetch(`${import.meta.env.VITE_API_URL}/openings`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
+                },
+                body: JSON.stringify(payload),
+            });
 
             alert('Opening created successfully');
 

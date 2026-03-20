@@ -45,7 +45,7 @@ const OpeningCard = ({ opening, onViewRole }) => {
             <div className="flex items-center gap-6 text-sm">
                 <button
                     className="text-blue-400 hover:text-blue-300 font-medium"
-                    onClick={onViewRole}
+                    onClick={() => onViewRole(opening.id)}
                 >
                     View Role
                 </button>

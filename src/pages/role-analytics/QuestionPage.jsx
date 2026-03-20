@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import QuestionSelector from '../../components/role-analytics/question/QuestionSelector';
 import QuestionResponses from '../../components/role-analytics/question/QuestionResponses';
@@ -26,16 +27,17 @@ const item = {
 
 const questions = [
     { key: 'name', label: 'Enter your Name', type: 'list' },
-    { key: 'year_of_study', label: 'Choose Year of Study', type: 'grouped' },
-    { key: 'phone_number', label: 'Enter your Phone Number', type: 'list' },
+    { key: 'yearOfStudy', label: 'Choose Year of Study', type: 'grouped' },
+    { key: 'phoneNumber', label: 'Enter your Phone Number', type: 'list' },
     { key: 'email', label: 'Enter your Email Address', type: 'list' },
     { key: 'branch', label: 'Choose Branch', type: 'grouped' },
-    { key: 'prior_exp', label: 'Prior experience in Operations', type: 'list' },
+    { key: 'priorExperience', label: 'Prior experience in Operations', type: 'list' },
     { key: 'skillLevel', label: 'Management Skill Level', type: 'grouped' },
     { key: 'resume', label: 'Upload Resume', type: 'list' },
 ];
 
 export default function QuestionPage() {
+    const { applications } = useOutletContext();
     const [questionIndex, setQuestionIndex] = useState(0);
 
     const question = questions[questionIndex];
@@ -57,7 +59,7 @@ export default function QuestionPage() {
             </motion.div>
 
             <motion.div variants={item}>
-                <QuestionResponses question={question} />
+                <QuestionResponses question={question} applications={applications || []} />
             </motion.div>
         </motion.div>
     );

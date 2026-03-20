@@ -1,13 +1,12 @@
 import Cards from './Cards.jsx';
-import { responses } from '../../../lib/data';
 
-export default function SummaryCards() {
-    const names = responses.map(r => r.name);
-    const year_of_study = responses.map(r => r.year_of_study);
-    const phone_number = responses.map(r => r.phone_number);
-    const email = responses.map(r => r.email);
-    const branch = responses.map(r => r.branch);
-    const prior_exp = responses.map(r => r.prior_exp);
+export default function SummaryCards({ applications = [] }) {
+    const names = applications.map(r => r.name).filter(Boolean);
+    const year_of_study = applications.map(r => r.yearOfStudy).filter(Boolean);
+    const phone_number = applications.map(r => r.phoneNumber).filter(Boolean);
+    const email = applications.map(r => r.email).filter(Boolean);
+    const branch = applications.map(r => r.branch).filter(Boolean);
+    const prior_exp = applications.map(r => r.priorExperience).filter(Boolean);
 
     return (
         <>

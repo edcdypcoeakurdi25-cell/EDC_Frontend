@@ -1,10 +1,14 @@
 import { motion } from 'framer-motion';
-import { responses } from '../../../lib/data';
 
-export default function SkillChart() {
+export default function SkillChart({ applications = [] }) {
+    const getSkill = (app) => {
+        const skillField = app.fieldResponses?.find(f => f.field?.fieldTitle.includes('Skill'));
+        return skillField ? parseInt(skillField.responseValue, 10) : null;
+    };
+
     const skillLevel = [5, 4, 3, 2, 1].map(level => ({
         label: level,
-        value: responses.filter(r => r.skillLevel === level).length,
+        value: applications.filter(app => getSkill(app) === level).length,
     }));
 
     const maxValue = Math.max(1, ...skillLevel.map(d => d.value));
@@ -15,7 +19,7 @@ export default function SkillChart() {
                 <h2 className="text-white text-lg font-semibold">
                     Select the number that best defines your current level of Management Skills
                 </h2>
-                <p className="text-gray-400 text-sm">{responses.length} Responses</p>
+                <p className="text-gray-400 text-sm">{applications.length} Responses</p>
             </div>
 
             <div className="relative w-full max-w-3xl">

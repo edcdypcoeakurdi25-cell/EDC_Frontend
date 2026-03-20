@@ -1,3 +1,4 @@
+import LoginPage from './pages/auth/Login';
 import HomePage from './pages/Home';
 import MainLayout from './layouts/MainLayout';
 import SummaryPage from './pages/role-analytics/SummaryPage';
@@ -14,6 +15,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/login" element={<LoginPage />} />
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/release-openings" element={<ReleaseOpeningsPage />} />
@@ -33,7 +35,7 @@ const App = () => {
                             </OpeningBuilderProvider>
                         }
                     />
-                    <Route path="/role-analytics" element={<RoleAnalyticsLayout />}>
+                    <Route path="/role-analytics/:id" element={<RoleAnalyticsLayout />}>
                         <Route index element={<Navigate to="summary" replace />} />
                         <Route path="summary" element={<SummaryPage />} />
                         <Route path="question" element={<QuestionPage />} />

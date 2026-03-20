@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useOutletContext } from 'react-router-dom';
 
 import SkillChart from '../../components/role-analytics/summary/SkillChart';
 import ResumeList from '../../components/role-analytics/summary/ResumeList';
@@ -26,6 +27,7 @@ const item = {
 };
 
 export default function SummaryPage() {
+    const { stats, applications } = useOutletContext();
     return (
         <motion.div variants={container} initial="hidden" animate="show" className="space-y-8 mt-6">
             <motion.div variants={item}>
@@ -33,15 +35,15 @@ export default function SummaryPage() {
             </motion.div>
 
             <motion.div variants={item}>
-                <SummaryCards />
+                <SummaryCards applications={applications || []} />
             </motion.div>
 
             <motion.div variants={item}>
-                <SkillChart />
+                <SkillChart applications={applications || []} />
             </motion.div>
 
             <motion.div variants={item}>
-                <ResumeList />
+                <ResumeList applications={applications || []} />
             </motion.div>
 
             <motion.div variants={item} className="flex justify-end">

@@ -1,9 +1,10 @@
-export default function RoleInfo() {
+export default function RoleInfo({ opening }) {
+    if (!opening) return null;
     return (
         <div className="flex flex-col gap-6 mb-14">
-            <InfoRow label="Opening" value="Operations Associate" />
-            <InfoRow label="Number of Openings" value="3" />
-            <InfoRow label="Type of Opening" value="On-Site" />
+            <InfoRow label="Opening" value={opening.title || "N/A"} />
+            <InfoRow label="Number of Openings" value={opening.numberOfSlots || "0"} />
+            <InfoRow label="Type of Opening" value={opening.workType || "N/A"} />
         </div>
     );
 }

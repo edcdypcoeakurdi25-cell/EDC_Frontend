@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
 
-export default function StatsCards() {
+export default function StatsCards({ stats }) {
+    if (!stats) return null;
     return (
         <div className="flex flex-col md:flex-row gap-10 mb-15">
-            <StatCard title="Number of Applicants" value="13" color="green" />
+            <StatCard title="Number of Applicants" value={stats.totalApplications || 0} color="green" />
 
-            <StatCard title="Number of Views" value="54" subtitle="In last 1 month" />
+            <StatCard title="Number of Views" value={stats.views || 0} subtitle="In last 1 month" />
         </div>
     );
 }
