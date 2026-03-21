@@ -19,22 +19,10 @@ const App = () => {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/release-openings" element={<ReleaseOpeningsPage />} />
-                    <Route
-                        path="/create-opening"
-                        element={
-                            <OpeningBuilderProvider>
-                                <NewOpeningForm />
-                            </OpeningBuilderProvider>
-                        }
-                    />
-                    <Route
-                        path="/create-opening/form-builder"
-                        element={
-                            <OpeningBuilderProvider>
-                                <OpeningDetailsForm />
-                            </OpeningBuilderProvider>
-                        }
-                    />
+                    <Route path="/create-opening" element={<OpeningBuilderProvider><OutletWrapper /></OpeningBuilderProvider>}>
+                        <Route index element={<NewOpeningForm />} />
+                        <Route path="form-builder" element={<OpeningDetailsForm />} />
+                    </Route>
                     <Route path="/role-analytics/:id" element={<RoleAnalyticsLayout />}>
                         <Route index element={<Navigate to="summary" replace />} />
                         <Route path="summary" element={<SummaryPage />} />
@@ -46,5 +34,8 @@ const App = () => {
         </BrowserRouter>
     );
 };
+
+import { Outlet } from 'react-router-dom';
+const OutletWrapper = () => <Outlet />;
 
 export default App;

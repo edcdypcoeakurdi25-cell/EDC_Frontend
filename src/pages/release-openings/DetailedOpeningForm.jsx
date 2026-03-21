@@ -59,7 +59,7 @@ export default function OpeningDetailsForm() {
         try {
             setSaving(true);
 
-            await fetch(`${import.meta.env.VITE_API_URL}/openings`, {
+            const openingRes = await fetch(`${import.meta.env.VITE_API_URL}/openings`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,13 +67,52 @@ export default function OpeningDetailsForm() {
                 },
                 body: JSON.stringify(payload),
             });
+            const openingDataRes = await openingRes.json();
+            if (!openingRes.ok) throw new Error(openingDataRes.message || 'Failed to create opening');
+            
+            const openingId = openingDataRes.data.id;
 
-            alert('Opening created successfully');
+            // Map frontend question to backend schema
+            const customFields = questions.map((q, index) => {
+                const typeMap = {
+                    short: 'SHORT_ANSWER',
+                    long: 'LONG_ANSWER',
+                    mcq: 'MULTIPLE_CHOICE',
+                    multi: 'MULTIPLE_CORRECT',
+                    upload: 'UPLOAD_DOC'
+                };
+                return {
+                    fieldTitle: q.title,
+                    inputType: typeMap[q.type] || 'SHORT_ANSWER',
+                    isRequired: q.required,
+                    options: (q.type === 'mcq' || q.type === 'multi') ? JSON.stringify(q.options || []) : null,
+                    order: index + 1
+                };
+            });
+
+            const formPayload = {
+                openingId,
+                hasPriorExp: true,
+                customFields
+            };
+
+            const formRes = await fetch(`${import.meta.env.VITE_API_URL}/forms`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
+                },
+                body: JSON.stringify(formPayload),
+            });
+            const formDataRes = await formRes.json();
+            if (!formRes.ok) throw new Error(formDataRes.message || 'Failed to create form');
+
+            alert('Opening and form created successfully');
 
             resetOpening();
         } catch (err) {
             console.error(err);
-            alert('Failed to save opening');
+            alert(err.message || 'Failed to save opening and form');
         } finally {
             setSaving(false);
         }

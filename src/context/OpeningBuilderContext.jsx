@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 const OpeningBuilderContext = createContext();
 
 const EMPTY_OPENING = {
-    title: 'Opening Title',
+    title: '',
     domain: '',
     workType: '',
     openings: '',

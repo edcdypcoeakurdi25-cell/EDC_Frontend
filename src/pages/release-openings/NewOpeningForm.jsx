@@ -117,7 +117,7 @@ export default function NewOpeningForm() {
 
     const handleClear = () => {
         setOpeningData({
-            title: 'Opening Title',
+            title: '',
             domain: '',
             workType: '',
             openings: '',

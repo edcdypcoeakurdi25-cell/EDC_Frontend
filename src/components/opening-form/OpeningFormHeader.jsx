@@ -39,12 +39,17 @@ export default function OpeningFormHeader({
 
                 <button
                     onClick={() => setIsEditingTitle(true)}
-                    className={`flex items-center gap-1 bg-zinc-800 text-zinc-300 text-xs px-3 py-1 rounded-md hover:bg-zinc-700 transition cursor-pointer ${error ? 'border-red-500' : ''}`}
+                    className={`flex items-center gap-1 bg-zinc-800 text-zinc-300 text-xs px-3 py-1 rounded-md hover:bg-zinc-700 transition cursor-pointer border ${error ? 'border-red-500' : 'border-transparent'}`}
                 >
                     <Pencil size={12} />
                     Edit
                 </button>
             </div>
+            {error && (
+                <div className="absolute top-16 right-0 text-red-500 text-sm font-semibold">
+                    {error}
+                </div>
+            )}
         </motion.div>
     );
 }

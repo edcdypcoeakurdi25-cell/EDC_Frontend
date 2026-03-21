@@ -10,26 +10,44 @@ const groupedOptions = {
 export default function QuestionResponses({ question, applications = [] }) {
     const data = useMemo(() => {
         if (question.type === 'grouped') {
-            const options = groupedOptions[question.key] || [];
-
+            const options = question.isCustom ? [] : (groupedOptions[question.key] || []);
             const countMap = {};
             options.forEach(opt => (countMap[opt] = 0));
 
             applications.forEach(r => {
-                const value = r[question.key];
-                if (value && countMap.hasOwnProperty(value)) {
-                    countMap[value] += 1;
+                let value;
+                if (question.isCustom) {
+                    const field = r.fieldResponses?.find(f => f.field?.fieldTitle === question.label);
+                    value = field ? field.responseValue : null;
+                } else {
+                    value = r[question.key];
+                }
+                
+                if (value) {
+                    // For multiple choice, it can be comma separated or scalar. Handle comma separated for MULTIPLE_CORRECT
+                    const values = value.includes(',') ? value.split(',').map(v => v.trim()) : [value];
+                    values.forEach(v => {
+                        if (!countMap.hasOwnProperty(v) && question.isCustom) countMap[v] = 0;
+                        if (countMap.hasOwnProperty(v)) countMap[v] += 1;
+                    });
                 }
             });
 
-            return options.map(label => ({
+            return Object.entries(countMap).map(([label, count]) => ({
                 label,
-                count: countMap[label],
+                count,
             }));
         }
 
         return applications.map(r => {
-            if (question.key === 'resume') {
+            if (question.isCustom) {
+                 const field = r.fieldResponses?.find(f => f.field?.fieldTitle === question.label);
+                 if (!field) return null;
+                 if (field.field?.inputType === 'UPLOAD_DOC' && field.fileUrl) {
+                     return { name: field.responseValue || "Download File", url: field.fileUrl };
+                 }
+                 return field.responseValue || null;
+            } else if (question.key === 'resume') {
                  const resumeField = r.fieldResponses?.find(f => f.field?.inputType === 'UPLOAD_DOC');
                  return resumeField ? { name: resumeField.responseValue, url: resumeField.fileUrl } : null;
             } else if (question.key === 'skillLevel') {

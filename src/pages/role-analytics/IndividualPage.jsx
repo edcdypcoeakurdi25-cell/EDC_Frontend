@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState, useMemo } from 'react';
-import { responses } from '../../lib/data';
+import { useOutletContext } from 'react-router-dom';
 import IndividualCard from '../../components/role-analytics/individual/IndividualCard';
 import IndividualNavigator from '../../components/role-analytics/individual/IndividualNavigator';
 
@@ -8,10 +8,7 @@ const container = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
-        transition: {
-            staggerChildren: 0.12,
-            delayChildren: 0.1,
-        },
+        transition: { staggerChildren: 0.12, delayChildren: 0.1 },
     },
 };
 
@@ -25,12 +22,14 @@ const item = {
 };
 
 export default function IndividualPage() {
+    const { applications } = useOutletContext();
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
 
-    const data = useMemo(() => responses[index], [index]);
+    const safeApplications = applications || [];
+    const data = useMemo(() => safeApplications[index], [index, safeApplications]);
 
-    if (!responses || responses.length === 0) {
+    if (!safeApplications || safeApplications.length === 0) {
         return <div className="mt-10 text-center text-neutral-400">No responses available</div>;
     }
     return (
@@ -41,7 +40,7 @@ export default function IndividualPage() {
                     setIndex={setIndex}
                     direction={direction}
                     setDirection={setDirection}
-                    total={responses.length}
+                    total={safeApplications.length}
                 />
             </motion.div>
 
