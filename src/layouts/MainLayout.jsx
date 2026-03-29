@@ -1,8 +1,16 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const MainLayout = () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        return (
+            <Navigate to={'/login'} />
+        )
+    }
+
     return (
         <div className="flex h-screen overflow-hidden">
             <Sidebar />

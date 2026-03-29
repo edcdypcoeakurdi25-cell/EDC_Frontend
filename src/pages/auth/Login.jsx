@@ -27,9 +27,9 @@ export default function LoginPage() {
                 localStorage.setItem('token', data.data.token);
                 // Optionally store user details if needed
                 localStorage.setItem('user', JSON.stringify(data.data.user));
-                
+
                 // Redirect to dashboard
-                navigate('/release-openings');
+                navigate('/');
             } else {
                 setError(data.message || 'Login failed. Please check your credentials.');
             }
@@ -44,7 +44,7 @@ export default function LoginPage() {
         <div className="flex items-center justify-center min-h-screen bg-black text-white px-4">
             <div className="w-full max-w-sm flex flex-col gap-6">
                 <div className="rounded-xl border border-white/10 bg-[#121212] text-white shadow-sm overflow-hidden">
-                    <div className="flex flex-col space-y-1.5 p-6">
+                    <div className="flex flex-col space-y-1.5 px-6 py-4">
                         <h3 className="font-semibold tracking-tight text-xl">Login to your account</h3>
                         <p className="text-sm text-neutral-400">
                             Enter your credentials below to access the dashboard
@@ -52,7 +52,7 @@ export default function LoginPage() {
                     </div>
 
                     <div className="p-6 pt-0">
-                        {error && (
+                        {!!error && (
                             <div className="mb-4 bg-red-500/10 border border-red-500/20 text-red-500 text-sm p-3 rounded-md">
                                 {error}
                             </div>
@@ -70,9 +70,9 @@ export default function LoginPage() {
                                     type="text"
                                     value={domainName}
                                     onChange={(e) => setDomainName(e.target.value)}
-                                    placeholder="admin_user"
+                                    placeholder="domain-position"
                                     required
-                                    className="flex h-9 w-full rounded-md border border-white/10 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
+                                    className="flex h-9 w-full rounded-md border border-white/10 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 mt-1"
                                 />
                             </div>
 
@@ -97,6 +97,7 @@ export default function LoginPage() {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
+                                    placeholder='Password'
                                     className="flex h-9 w-full rounded-md border border-white/10 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
                                 />
                             </div>
@@ -105,23 +106,10 @@ export default function LoginPage() {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold h-9 px-4 py-2 w-full transition-colors ${loading ? 'bg-neutral-600 text-neutral-300 cursor-not-allowed' : 'bg-white text-black hover:bg-neutral-200'}`}
+                                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold h-9 px-4 py-2 w-full transition-colors cursor-pointer ${loading ? 'bg-neutral-600 text-neutral-300 cursor-not-allowed' : 'bg-white text-black hover:bg-neutral-200'}`}
                                 >
                                     {loading ? 'Logging in...' : 'Login'}
                                 </button>
-                                <button
-                                    type="button"
-                                    className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 w-full border border-white/10 bg-transparent hover:bg-neutral-800 transition-colors"
-                                >
-                                    Login with Google
-                                </button>
-
-                                <div className="text-center text-xs text-neutral-400 pt-2">
-                                    Don't have an account?{' '}
-                                    <a href="#" className="underline hover:text-white transition">
-                                        Sign up
-                                    </a>
-                                </div>
                             </div>
                         </form>
                     </div>

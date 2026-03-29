@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, Save } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 import QuestionList from '../../components/form-builder/QuestionList';
 import QuestionCreator from '../../components/form-builder/QuestionCreator';
@@ -17,6 +18,7 @@ const container = {
 };
 
 export default function OpeningDetailsForm() {
+    const navigate = useNavigate();
     const { openingData, questions, resetOpening } = useOpeningBuilder();
 
     const [previewOpen, setPreviewOpen] = useState(false);
@@ -69,7 +71,7 @@ export default function OpeningDetailsForm() {
             });
             const openingDataRes = await openingRes.json();
             if (!openingRes.ok) throw new Error(openingDataRes.message || 'Failed to create opening');
-            
+
             const openingId = openingDataRes.data.id;
 
             // Map frontend question to backend schema
@@ -109,6 +111,7 @@ export default function OpeningDetailsForm() {
 
             alert('Opening and form created successfully');
 
+            navigate(`/release-openings`);
             resetOpening();
         } catch (err) {
             console.error(err);

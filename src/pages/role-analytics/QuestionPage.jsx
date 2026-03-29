@@ -1,6 +1,6 @@
+import { motion } from 'framer-motion';
 import { useState, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import QuestionSelector from '../../components/role-analytics/question/QuestionSelector';
 import QuestionResponses from '../../components/role-analytics/question/QuestionResponses';
 import QuestionNavigation from '../../components/role-analytics/question/QuestionNavigation';
@@ -38,8 +38,28 @@ export default function QuestionPage() {
             { key: 'branch', label: 'Choose Branch', type: 'grouped' },
             { key: 'priorExperience', label: 'Prior Experience', type: 'list' },
         ];
-        
+
         const customFieldsMap = new Map();
+
+        // 1. Add from opening's form definition if available
+        const opening = useOutletContext().opening;
+        const formFields = opening?.form?.customFields || opening?.customFields || [];
+        formFields.forEach(f => {
+            if (f.fieldTitle && !customFieldsMap.has(f.fieldTitle)) {
+                customFieldsMap.set(f.fieldTitle, {
+                    key: `custom_${f.fieldTitle}`,
+                    label: f.fieldTitle,
+                    type:
+                        f.inputType === 'MULTIPLE_CHOICE' || f.inputType === 'MULTIPLE_CORRECT'
+                            ? 'grouped'
+                            : 'list',
+                    isCustom: true,
+                    inputType: f.inputType,
+                });
+            }
+        });
+
+        // 2. Add from applications (for backward compatibility or if form is missing)
         applications?.forEach(app => {
             app.fieldResponses?.forEach(resp => {
                 const title = resp.field?.fieldTitle;
@@ -47,16 +67,20 @@ export default function QuestionPage() {
                     customFieldsMap.set(title, {
                         key: `custom_${title}`,
                         label: title,
-                        type: resp.field?.inputType === 'MULTIPLE_CHOICE' ? 'grouped' : 'list',
+                        type:
+                            resp.field?.inputType === 'MULTIPLE_CHOICE' ||
+                            resp.field?.inputType === 'MULTIPLE_CORRECT'
+                                ? 'grouped'
+                                : 'list',
                         isCustom: true,
-                        inputType: resp.field?.inputType
+                        inputType: resp.field?.inputType,
                     });
                 }
             });
         });
-        
+
         return [...base, ...Array.from(customFieldsMap.values())];
-    }, [applications]);
+    }, [applications, useOutletContext().opening]);
 
     const question = questions[questionIndex];
     if (!question) return null;

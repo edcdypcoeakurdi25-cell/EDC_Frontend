@@ -28,10 +28,12 @@ const item = {
 
 export default function SummaryPage() {
     const { stats, applications } = useOutletContext();
+    const { opening } = stats || {};
+    
     return (
         <motion.div variants={container} initial="hidden" animate="show" className="space-y-8 mt-6">
             <motion.div variants={item}>
-                <SummaryDownload />
+                <SummaryDownload applications={applications || []} opening={opening} />
             </motion.div>
 
             <motion.div variants={item}>
@@ -47,7 +49,7 @@ export default function SummaryPage() {
             </motion.div>
 
             <motion.div variants={item} className="flex justify-end">
-                <SummaryDownload />
+                <SummaryDownload applications={applications || []} opening={opening} />
             </motion.div>
         </motion.div>
     );
