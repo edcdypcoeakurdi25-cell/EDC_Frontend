@@ -84,12 +84,12 @@ export default function LoginPage() {
                                     >
                                         Password
                                     </label>
-                                    <a
+                                    {/* <a
                                         href="#"
                                         className="inline-block text-xs text-neutral-400 underline-offset-4 hover:underline"
                                     >
                                         Forgot your password?
-                                    </a>
+                                    </a>  */}
                                 </div>
                                 <input
                                     id="password"
